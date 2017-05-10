@@ -29,6 +29,20 @@ function parseWKTPolygon(wkt) {
 
 
 
-console.log(parseWKTPolygon(testWKT));
 
+map.on('load', function () {
 
+    map.addLayer({
+        'id': 'districts',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            'data': "https://gist.githubusercontent.com/anonymous/21ecd012ca806bd52cfdc37772ee2b85/raw/c0694d9f07998faf9d4038ffb2203e574e1a5c02/map.geojson"
+        },
+        'layout': {},
+        'paint': {
+            'fill-color': '#088',
+            'fill-opacity': 0.8
+        }
+    });
+});
