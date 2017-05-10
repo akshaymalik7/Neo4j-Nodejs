@@ -36,7 +36,7 @@ var session = driver.session();
 app.get('/', function(req, res){
 
     session
-        .run('Match (n:District) Return n limit 20')
+        .run('Match (n:District) Return n Order by n.pop Desc limit 20')
         .then(function (result) {
             var districtL = [];
             result.records.forEach(function (record) {
@@ -50,6 +50,7 @@ app.get('/', function(req, res){
 
             });
             res.render('index' , {  districts: districtL });
+            session.close();
         })
 
         .catch(function (error) {
