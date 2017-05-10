@@ -24,22 +24,21 @@ app.use(bodyParser.urlencoded({ extended: false}));
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Initiating a neo4j session
 var driver = neo4j.driver("bolt://165.123.139.8", neo4j.auth.basic("max", "1"));
 var session = driver.session();
 
-var districtL = [];
+
+
 
 
 //Set router
-
 app.get('/', function(req, res){
 
     session
         .run('Match (n:District) Return n limit 20')
         .then(function (result) {
-
+            var districtL = [];
             result.records.forEach(function (record) {
                 console.log(record._fields[0].properties.name);
 
@@ -49,22 +48,15 @@ app.get('/', function(req, res){
                     wkt: record._fields[0].properties.wkt
                 });
 
-
             });
-
+            res.render('index' , {  districts: districtL });
         })
 
         .catch(function (error) {
             console.log(error);
         });
-
-
-    res.render('index' , {
-        districts: districtL
-    });
-
-
 });
+
 
 // Set Port
 app.listen(3000, function () {
