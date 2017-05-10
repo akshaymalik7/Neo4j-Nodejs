@@ -27,15 +27,6 @@
 </head>
 <body>
 
-  <script>
-    //Collecting the data that we gatheres from the server call
-      var queryData = [];
-      <%districts.forEach(function(){%
-        queryData.push(<%- district>)
-      <%})%>
-       <%-JSON.stringify(districts)%>.wkt
-  </script>
-
     <section class="container-fluid">
         <div class="navbar-fixed-top col-md-3 mar-top20">
             <div class="row">
@@ -59,10 +50,26 @@
         </div>
 
     </section>
+<script>
+console.log(
+<% districts.forEach(function(district) { %>
+
+  <%- JSON.stringify(district)%>.name,
+<%})%>
+);
+</script>
 
     <section>
         <div class="container-fluid" style="background-color: transparent">
-            <div class="navbar-fixed-bottom col-md-1 align-left">
+            <div class="navbar-fixed-bottom col-md-2 align-left">
+                <h3>
+                  <ul>
+
+                  <% districts.forEach(function(district) { %>
+                    <li> <%- JSON.parse( JSON.stringify(district.name))%> </li>
+                  <%})%>
+                </ul>
+                </h3>
                 <h3><button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="Pop">Population</button></h3><br>
 
             </div>
@@ -72,7 +79,6 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
-
 
     <script src="js/typeAnimate.js"></script>
     <script src="js/underscore.js"></script>
