@@ -24,8 +24,13 @@
     <link rel="stylesheet" href="skin/default.css">
     <link rel="stylesheet" href="fonts/aha/stylesheet.css">
 
+
 </head>
 <body>
+
+  <script src="js/terraformer-1.0.8.min.js"></script>
+  <script src="js/terraformer-wkt-parser-1.1.2.min.js"></script>
+
 
     <section class="container-fluid">
         <div class="navbar-fixed-top col-md-3 mar-top20">
@@ -48,15 +53,33 @@
         <div class="container-fluid">
             <div id='map'></div>
         </div>
-
     </section>
-<script>
-console.log(
-<% districts.forEach(function(district) { %>
 
-  <%- JSON.stringify(district)%>.name,
-<%})%>
-);
+
+<script>
+
+var collectResponse =  [];
+var spatialData = [];
+
+var getSpatial = function(list){
+  list.forEach(function(element){
+    spatialData.push(Terraformer.WKT.parse(element.wkt));
+  })
+}
+
+
+
+var loadData = function (){
+  <% districts.forEach(function(district) { %>
+
+    collectResponse.push(<%- JSON.stringify(district)%>)
+
+  <%})%>
+
+  getSpatial(collectResponse);
+}
+
+loadData();
 </script>
 
     <section>
@@ -70,7 +93,7 @@ console.log(
                   <%})%>
                 </ul>
                 </h3>
-                <h3><button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="Pop">Population</button></h3><br>
+                <h3><button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="Pop" onclick="Population()">Population</button></h3><br>
 
             </div>
         </div>
