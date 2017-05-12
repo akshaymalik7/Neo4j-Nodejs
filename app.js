@@ -31,21 +31,25 @@ var session = driver.session();
 
 
 
-
 //Set router
 app.get('/', function(req, res){
 
     session
-        .run('Match (n:District) Return n Order by n.pop Desc limit 20')
+        .run('Match (n:District) Where n.Pop IS NOT NULL Return n Order by n.Pop Desc limit 30')
         .then(function (result) {
             var districtL = [];
             result.records.forEach(function (record) {
-                console.log(record._fields[0].properties.name);
+                console.log(record._fields[0].properties.Pop);
 
                 districtL.push({
                     name: record._fields[0].properties.name ,
                     id: record._fields[0].properties.id.low,
-                    wkt: record._fields[0].properties.wkt
+                    wkt: record._fields[0].properties.wkt,
+                    ho: record._fields[0].properties.HH.low,
+                    pop: record._fields[0].properties.Pop.low,
+                    height: record._fields[0].properties.Pop.low * 100 ,
+                    color: "#EF5B5B"
+
                 });
 
             });
